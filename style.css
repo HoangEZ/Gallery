@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 100px;
+}
+
+.gallery-div {
+  width: 500px;
+  height: 500px;
+}
+
+.left .divide-outer {
+  position: relative;
+  transform-style: preserve-3d;
+}
+.left .divide-outer .divide {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.left .divide-outer .divide:first-of-type {
+  transform: translateZ(250px);
+}
+.left .divide-outer:nth-child(2n+1) .divide:last-of-type {
+  transform: rotateY(90deg) translateZ(250px);
+}
+.left .divide-outer:nth-child(2n) .divide:last-of-type {
+  transform: rotateY(-90deg) translateZ(250px);
+}
+
+.right .divide-outer {
+  position: relative;
+  transform-style: preserve-3d;
+}
+.right .divide-outer .divide {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.right .divide-outer .divide:first-of-type {
+  transform: translateZ(250px);
+}
+.right .divide-outer:nth-child(2n+1) .divide:last-of-type {
+  transform: rotateY(-90deg) translateZ(250px);
+}
+.right .divide-outer:nth-child(2n) .divide:last-of-type {
+  transform: rotateY(90deg) translateZ(250px);
+}
+
+.active.left .divide-outer {
+  transition: transform 1s ease-in-out;
+}
+.active.left .divide-outer:nth-child(2n+1) {
+  transform: rotateY(-90deg);
+}
+.active.left .divide-outer:nth-child(2n) {
+  transform: rotateY(90deg);
+}
+.active.right .divide-outer {
+  transition: transform 1s ease-in-out;
+}
+.active.right .divide-outer:nth-child(2n+1) {
+  transform: rotateY(90deg);
+}
+.active.right .divide-outer:nth-child(2n) {
+  transform: rotateY(-90deg);
+}/*# sourceMappingURL=style.css.map */
