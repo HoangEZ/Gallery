@@ -18,62 +18,70 @@
     document.addEventListener('DOMContentLoaded', () => {
       const images = document.getElementsByClassName('gallery');
       const galleryDiv = document.getElementById('gallery-div');
-      if(images.length) {
-        const width = 500;
-        const height = 500;
-        const srcs = [];
-        while(images.length) {
-          const image = images[0];
-          srcs.push(image.src)
-          image.remove();
-        }
-        let current = 0;
-        let isRight = true;
-        const galleryHandler = () =>{
-          const next = (current+1 >= srcs.length) ? 0 : current+1;
-          const numOfDivide = 5;
-          galleryDiv.innerHTML='';
-          galleryDiv.classList.remove('active');
-          galleryDiv.classList.remove('left');
-          galleryDiv.classList.remove('right');
-          if(isRight)
-            galleryDiv.classList.add('right');
-          else
-            galleryDiv.classList.add('left');
-          isRight = !isRight;
-          for(let i=0;i<numOfDivide;i++){
-            const divideOuter = document.createElement('div');
-            divideOuter.classList.add('divide-outer');
-            const currentDivide = document.createElement('div');
-            currentDivide.classList.add('divide');
-            const nextDivide = document.createElement('div');
-            nextDivide.classList.add('divide');
-            currentDivide.style.backgroundImage = 'url('+srcs[current]+')';
-            nextDivide.style.backgroundImage = 'url('+srcs[next]+')';
-            divideOuter.style.width = currentDivide.style.width = nextDivide.style.width = width + 'px';
-            divideOuter.style.height = currentDivide.style.height = nextDivide.style.height = (height*1.0/numOfDivide) + 'px';
-            currentDivide.style.backgroundPositionX = nextDivide.style.backgroundPositionX = 0;
-            currentDivide.style.backgroundPositionY = nextDivide.style.backgroundPositionY = -(height*1.0/numOfDivide*i)+'px';
-            divideOuter.appendChild(currentDivide);
-            divideOuter.appendChild(nextDivide);
-            galleryDiv.appendChild(divideOuter);
+      const promise = new Promise((resolve, reject) => {
+        images[0].addEventListener('load', () => {
+          resolve()
+        })
+      })
+      promise.then(() =>{
+        if(images.length) {
+          const width = images[0].naturalWidth;
+          const height = images[0].naturalHeight;
+          const srcs = [];
+          while(images.length) {
+            const image = images[0];
+            srcs.push(image.src)
+            image.remove();
           }
+          let current = 0;
+          let isRight = true;
+          const galleryHandler = () =>{
+            const next = (current+1 >= srcs.length) ? 0 : current+1;
+            const numOfDivide = 5;
+            galleryDiv.innerHTML='';
+            galleryDiv.classList.remove('active');
+            galleryDiv.classList.remove('left');
+            galleryDiv.classList.remove('right');
+            if(isRight)
+              galleryDiv.classList.add('right');
+            else
+              galleryDiv.classList.add('left');
+            isRight = !isRight;
+            for(let i=0;i<numOfDivide;i++){
+              const divideOuter = document.createElement('div');
+              divideOuter.classList.add('divide-outer');
+              const currentDivide = document.createElement('div');
+              currentDivide.classList.add('divide');
+              const nextDivide = document.createElement('div');
+              nextDivide.classList.add('divide');
+              currentDivide.style.backgroundImage = 'url('+srcs[current]+')';
+              nextDivide.style.backgroundImage = 'url('+srcs[next]+')';
+              divideOuter.style.width = currentDivide.style.width = nextDivide.style.width = width + 'px';
+              divideOuter.style.height = currentDivide.style.height = nextDivide.style.height = (height*1.0/numOfDivide) + 'px';
+              currentDivide.style.backgroundPositionX = nextDivide.style.backgroundPositionX = 0;
+              currentDivide.style.backgroundPositionY = nextDivide.style.backgroundPositionY = -(height*1.0/numOfDivide*i)+'px';
+              divideOuter.appendChild(currentDivide);
+              divideOuter.appendChild(nextDivide);
+              galleryDiv.appendChild(divideOuter);
+            }
 
-          setTimeout(() => {
-            galleryDiv.classList.add('active');
-          },1000);
+            setTimeout(() => {
+              galleryDiv.classList.add('active');
+            },1000);
 
-          current++;
-          if(current>= srcs.length) {
-            current = 0;
+            current++;
+            if(current>= srcs.length) {
+              current = 0;
+            }
           }
-        }
-        
-        galleryHandler();
-        setInterval(galleryHandler
-        ,3000)
+          
+          galleryHandler();
+          setInterval(galleryHandler
+          ,3000)
 
-      }
+        }
+      });
+      
     })
   </script>
 </body>
