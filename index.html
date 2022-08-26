@@ -19,8 +19,8 @@
       const images = document.getElementsByClassName('gallery');
       const galleryDiv = document.getElementById('gallery-div');
       if(images.length) {
-        const width = images[0].width;
-        const height = images[0].height;
+        const width = images[0].naturalWidth;
+        const height = images[0].naturalHeight;
         const srcs = [];
         while(images.length) {
           const image = images[0];
